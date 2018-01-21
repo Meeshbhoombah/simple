@@ -30,6 +30,10 @@ $ flask run
 ```
 The simple node should start running on your local machine.
 
+## Todo
+[ ] Barebones Flask server
+[ ]
+
 ## Features
 - [ ] Transaction State-based machine
 - [ ] Account System
