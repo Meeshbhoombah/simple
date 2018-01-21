@@ -28,7 +28,7 @@ $ pip install -r requirements.txt
 $ export FLASK_APP=run.py
 $ flask run
 ```
-The simple node should start running on your local machine.
+The simple node should now be running on your local machine.
 
 ## Todo
 [ ] Barebones Flask server
