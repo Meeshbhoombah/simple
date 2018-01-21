@@ -3,31 +3,31 @@ A bare-bones cryptocurrency implemented in Python.
 
 ## Installation
 1. Clone this repository.
-"""
+```
 $ git clone https://github.com/Meeshbhoombah/simple
-"""
+```
 
 2. Create and run a virtualenv (recommended BUT not required).
-"""
+```
 $ virtualenv venv
 New python executable in /Users/usr/Desktop/venv/bin/python
 Installing setuptools, pip, wheel...done.
 
 $ . venv/bin/activate
-"""
+```
 After running `. venv/bin/activate` you should see the virtualenv active
 in the shell.
 
 3. Install requirements.txt.
-"""
+```
 $ pip install -r requirements.txt
-"""
+```
 
 4. Add the flask server and run it.
-"""
+```
 $ export FLASK_APP=run.py
 $ flask run
-"""
+```
 The simple node should start running on your local machine.
 
 ## Features
