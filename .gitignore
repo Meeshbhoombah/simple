@@ -1,3 +1,6 @@
+# VM
+venv/
+
 # Vim
 *.swo
 *.swp
