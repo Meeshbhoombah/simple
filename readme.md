@@ -28,6 +28,7 @@ $ pip install -r requirements.txt
 $ brew install ngrok
 Recieving objects: 100% ...
 ...
+==> Installation successful!
 ==> Caveats
 ...
 ```
@@ -38,6 +39,7 @@ authtoken by navigating to the auth section of the dashboard. Then, run:
 ```
 $ ngrok authtoken <YOUR_AUTH_TOKEN>
 ```
+You've now added your auth token to the ngrok configuration
 
 4. Add the flask server and run it.
 ```
