@@ -4,7 +4,6 @@ blockchain.py
 
 
 - Defines a block
-    + Uses module hashlib to hash blocks
 """
 
 import hashlib as hash
