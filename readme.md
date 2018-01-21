@@ -23,6 +23,22 @@ in the shell.
 $ pip install -r requirements.txt
 ```
 
+4. Install ngrok (if you haven't already).
+```
+$ brew install ngrok
+Recieving objects: 100% ...
+...
+==> Caveats
+...
+```
+If you see something along these lines then you have successfully installed ngrok.
+
+5. Create an [ngrok account](https://dashboard.ngrok.com/user/signup), and retrive your
+authtoken by navigating to the auth section of the dashboard. Then, run:
+```
+$ ngrok authtoken <YOUR_AUTH_TOKEN>
+```
+
 4. Add the flask server and run it.
 ```
 $ export FLASK_APP=run.py
