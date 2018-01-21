@@ -13,7 +13,7 @@ A bare-bones cryptocurrency implemented in Python.
 - [ ] Cryptocurrency
 
 
-[ ] Runnable Terminal Node:
-    [ ] Clone Blockchain (DNS Server lookup)
-    [ ] Simple terminal commands
+- [ ] Runnable Terminal Node:
+    + [ ] Clone Blockchain (DNS Server lookup)
+    + [ ] Simple terminal commands
 
