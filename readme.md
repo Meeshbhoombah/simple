@@ -1,5 +1,5 @@
 # Simple
-A node of the simple blockchain 🤑 implemented in Golang 🐍
+A node of the simple blockchain 🤑 implemented in Python 🐍
 
 I built simple as a model of bitcoin. In comparison to the Bitcoin blockchain, Simple is as its 
 name suggests, simple. That is not to say that bitcoin has extraneous functionality or that
