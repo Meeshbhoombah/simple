@@ -8,6 +8,3 @@ Using Bitcoin as a model:
 - [ ] Accounts
 - [ ] Transactions
 
-## 
-
-
