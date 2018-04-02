@@ -1,7 +1,2 @@
-# VM
-venv/
-
-# Vim
-*.swo
-*.swp
+.DS_Store
 
