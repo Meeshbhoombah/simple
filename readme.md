@@ -7,6 +7,10 @@ simple lacks in features, (in fact, it meets all the requirements of a Minimum V
 rather that the Simple blockchain sacrifcies efficiency and some security for educational 
 purposes.
 
+## Installation
+1. Clone
+2. Pip install
+
 ## Features
 1. Wallets
 2. Secure transactions
