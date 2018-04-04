@@ -6,5 +6,9 @@
     + Contributing
 - Python = readable
 
-###
+### Storage
+
+#### Onchain
+
+#### Offchain
 
