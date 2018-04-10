@@ -5,3 +5,6 @@ venv/
 *.swo
 *.swp
 
+# Python
+.pytest_cache/
+
