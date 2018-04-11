@@ -49,6 +49,7 @@ class SimpleBlockchainBaseTestCase(unittest.TestCase):
             cls (cls): the `SimpleTestingBlockchain` class
             path_to_contract (str): the path to the
         """
+        # maintain `unittest.Testcase` setUpClass logic
         super(SimpleTestingBlockchain, cls).setUpClass()
 
         # bind the testing object to the class
@@ -112,4 +113,13 @@ class SimpleBlockchainBaseTestCase(unittest.TestCase):
             # compile contract and initalize on testing blockchain
             self.c = self.s.contract(contract_code, languages = 'vyper')
 
+
+    def check_logs(self, topics, data)
+        """Searches through a topic to assert that a log was correctly made."""
+        found = False
+        for log_entry in self.s.head_state.receipts[-1].logs:
+            if topics == log_entry.topics and data == log_entry.data:
+                found = True
+
+        self.assertTrue(found, self.s.head_state.receipts[-1].logs)
 
