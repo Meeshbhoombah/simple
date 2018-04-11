@@ -9,11 +9,11 @@ Test the smart contract implementing the ERC-20 compliant version of simple.
 import unittest
 import ethereum.utils as utils
 import ethereum.abi as abi
-from tests.simple.test_base import SimpleBaseTestCase
+from tests.blockchain.test_base import SimpleBaseTestCase
 
 
 #PATH_TO_CONTRACT = "simple/blockchain/simple_ERC20.v.py"
-PATH_TO_CONTRACT = "simple/ERC20.v.py"
+PATH_TO_CONTRACT = "simple/blockchain/ERC20.v.py"
 
 MAX_UINT256 = (2 ** 256) - 1 # Maximum allowed uint256 value
 MAX_UINT128 = (2 ** 128) - 1 # Maximum allowed num128 valie
