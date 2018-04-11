@@ -9,10 +9,16 @@ Simple smart contract suite.
 
 import unittest
 from vyper import compiler
+from ethereum import utils
 from ethereum.tools import tester
 from ethereum.slogging import get_logger
 
-class SimpleBlockchainBaseTestCase(unittest.TestCase):
+
+MAX_UINT256 = (2 ** 256) - 1 # Maximum allowed uint256 value
+MAX_UINT128 = (2 ** 128) - 1 # Maximum allowed num128 valie
+
+
+class SimpleBaseTestCase(unittest.TestCase):
     """Creates and configures the PyEthereum tester object for Simple. 
   
     Initalizes the PyEthereum tester object and binds it to the `SimpleTestingBlockchain`
@@ -52,7 +58,7 @@ class SimpleBlockchainBaseTestCase(unittest.TestCase):
             path_to_contract (str): the path to the
         """
         # maintain `unittest.Testcase` setUpClass logic
-        super(SimpleTestingBlockchain, cls).setUpClass()
+        super(SimpleBaseTestCase, cls).setUpClass()
 
         # bind the testing object to the class
         cls.t = tester
@@ -127,5 +133,18 @@ class SimpleBlockchainBaseTestCase(unittest.TestCase):
                 found = True
 
         self.assertTrue(found, self.s.head_state.receipts[-1].logs)
+
+
+    @staticmethod
+    def to_int(bytez):
+        """Convert bytes to int."""
+        return int(utils.encode_hex(bytez), 16)
+
+    
+    @staticmethod
+    def to_bytes(i):
+        """Convert int to bytes."""
+        return int(i).to_bytes(32, byteorder = 'big')
+
 
 
