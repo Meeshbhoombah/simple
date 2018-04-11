@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 
 """
-tests/simple/__init__.py
+tests/simple/test_base.py
 
 Baseline testing class with a testing blockchain and other utilities for testing the 
 Simple smart contract suite. 
