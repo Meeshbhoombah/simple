@@ -1,9 +1,10 @@
 # -*- encoding: utf-8 -*-
 
 """
-./simple/tests/simple/__init__.py
+tests/simple/__init__.py
 
-Baseline testing class with a testing blockchain.
+Baseline testing class with a testing blockchain and other utilities for testing the 
+Simple smart contract suite. 
 """
 
 import unittest
@@ -11,7 +12,7 @@ from vyper import compiler
 from ethereum.tools import tester
 from ethereum.slogging import get_logger
 
-class SimpleTestingBlockchain(unittest.TestCase):
+class SimpleBlockchainBaseTestCase(unittest.TestCase):
     """Creates and configures the PyEthereum tester object for Simple. 
   
     Initalizes the PyEthereum tester object and binds it to the `SimpleTestingBlockchain`
@@ -22,16 +23,32 @@ class SimpleTestingBlockchain(unittest.TestCase):
         t (tester): the PyEthereum tester object 
         s (tester.Chain()): the current stored state of the testing blockchain, 
             initalized with a genesis block
-        c (ABIContract): The main contract compiled on the initalized PyEthereum test 
-            network
     """
     t = None
     s = None
-    c = None
+
 
     @classmethod
-    def setUpClass(cls):
-        """Initalizes the testing blockchain and funds accounts."""
+    def _listen_for_events(cls):
+        """Listen and collect all testing blockchain events."""
+        cls.events = []
+        cls.s.head_state.log_listeners.append(
+            lambda x: cls.events.append(cls.c.translator.listen(x))
+        )
+
+
+    @classmethod
+    def setUpClass(cls, path_to_contract = None):
+        """Bind the initalized testing blockchain to the SimpleTestingBlockchain class.
+       
+        Allows for one testing blockchain to be used for all test cases - utilizes the
+        PyEthereum `revert()` method to return to a previously saved state called a 
+        `snapshot`. 
+
+        Args:
+            cls (cls): the `SimpleTestingBlockchain` class
+            path_to_contract (str): the path to the
+        """
         super(SimpleTestingBlockchain, cls).setUpClass()
 
         # bind the testing object to the class
@@ -51,9 +68,12 @@ class SimpleTestingBlockchain(unittest.TestCase):
         # run vyper when requested
         cls.t.languages['vyper'] = compiler.Compiler()
 
+        cls.strict_log_mode = True
+        cls._listen_for_events()
+
     
-    def setUp(self):
-        """Configure and create defaults per test case."""
+    def setUp(self, path_to_contract = None):
+        """Revert to inital testing state and denote gas usage per test."""
         self.longMessage = True
 
         # reset the testing blockchain to the inital state
@@ -64,6 +84,10 @@ class SimpleTestingBlockchain(unittest.TestCase):
 
         get_logger('eth.pb.tx')
         get_logger('eth.pb.msg')
+
+        if path_to_contract:
+            self.deploy_contract(path_to_contract)
+            self.initial_state = self.c.snapshot()
 
 
     def tearDown(self):
@@ -78,5 +102,14 @@ class SimpleTestingBlockchain(unittest.TestCase):
 
         self.assertRaises(exception, callable)
         self.s.revert(initial_state)
+
+
+    def deploy_contract(self, path_to_contract):
+        """Deploy a compiled Vyper smart contract on the testing blockchain."""
+        with open(path_to_contract, 'r') as in_file:
+            contract_code = read()
+
+            # compile contract and initalize on testing blockchain
+            self.c = self.s.contract(contract_code, languages = 'vyper')
 
 
