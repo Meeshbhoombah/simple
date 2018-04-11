@@ -9,7 +9,7 @@ Test the smart contract implementing the ERC-20 compliant version of simple.
 import unittest
 import ethereum.utils as utils
 import ethereum.abi as abi
-from tests.simple import SimpleBaseTestCase
+from tests.simple.test_base import SimpleBaseTestCase
 
 
 #PATH_TO_CONTRACT = "simple/blockchain/simple_ERC20.v.py"
@@ -30,6 +30,7 @@ class SimpleERC20TestCase(SimpleBaseTestCase):
 
     def setUp(self):
         """Run test setUp and generate log signatures."""
+        self.deploy_contract(PATH_TO_CONTRACT)
         super(SimpleERC20TestCase, self).setUp()
         self.log_sigs = {
             'Transfer' : self.to_int(utils.sha3("Tranfer(address,address,uint256)")),
@@ -37,7 +38,7 @@ class SimpleERC20TestCase(SimpleBaseTestCase):
         }
 
    
-   def test_initial_state(self):
+    def test_initial_state(self):
         # Check total supply is 0
         self.assertEqual(self.c.totalSupply(), 0)
         # Check several account balances as 0
