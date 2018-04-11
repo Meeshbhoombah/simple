@@ -23,9 +23,11 @@ class SimpleBlockchainBaseTestCase(unittest.TestCase):
         t (tester): the PyEthereum tester object 
         s (tester.Chain()): the current stored state of the testing blockchain, 
             initalized with a genesis block
+        c (ABIContract): the compiled smart contract
     """
     t = None
     s = None
+    c = None
 
 
     @classmethod
@@ -64,17 +66,20 @@ class SimpleBlockchainBaseTestCase(unittest.TestCase):
         cls.s.head_state.set_balance(cls.t.a1, MAX_UINT256 * 3)
         cls.s.head_state.set_balance(cls.t.a2, utils.denoms.ether * 1)
 
-        cls.initial_state = None
-
         # run vyper when requested
         cls.t.languages['vyper'] = compiler.Compiler()
+
+        if path_to_contract:
+            self.deploy_contract(path_to_contract)
+        else:
+            cls.initial_state = None
 
         cls.strict_log_mode = True
         cls._listen_for_events()
 
     
-    def setUp(self, path_to_contract = None):
-        """Revert to inital testing state and denote gas usage per test."""
+    def setUp(self):
+        """Revert to inital testing state and output gas usage per test."""
         self.longMessage = True
 
         # reset the testing blockchain to the inital state
@@ -85,10 +90,6 @@ class SimpleBlockchainBaseTestCase(unittest.TestCase):
 
         get_logger('eth.pb.tx')
         get_logger('eth.pb.msg')
-
-        if path_to_contract:
-            self.deploy_contract(path_to_contract)
-            self.initial_state = self.c.snapshot()
 
 
     def tearDown(self):
@@ -112,9 +113,13 @@ class SimpleBlockchainBaseTestCase(unittest.TestCase):
 
             # compile contract and initalize on testing blockchain
             self.c = self.s.contract(contract_code, languages = 'vyper')
+           
+            # if no contract is loaded save inital state of smart contract
+            if not self.initial_state:
+                self.initial_state = self.c.snapshot()
 
 
-    def check_logs(self, topics, data)
+    def check_logs(self, topics, data):
         """Searches through a topic to assert that a log was correctly made."""
         found = False
         for log_entry in self.s.head_state.receipts[-1].logs:
@@ -122,4 +127,5 @@ class SimpleBlockchainBaseTestCase(unittest.TestCase):
                 found = True
 
         self.assertTrue(found, self.s.head_state.receipts[-1].logs)
+
 

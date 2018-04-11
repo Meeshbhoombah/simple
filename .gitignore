@@ -7,4 +7,5 @@ venv/
 
 # Python
 .pytest_cache/
+.cache
 
