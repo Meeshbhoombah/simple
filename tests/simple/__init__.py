@@ -147,4 +147,6 @@ class SimpleBaseTestCase(unittest.TestCase):
         return int(i).to_bytes(32, byteorder = 'big')
 
 
+if __name__ == '__main__':
+    unittest.main()
 

@@ -12,7 +12,8 @@ import ethereum.abi as abi
 from tests.simple import SimpleBaseTestCase
 
 
-PATH_TO_CONTRACT = "simple/blockchain/simple_ERC20.v.py"
+#PATH_TO_CONTRACT = "simple/blockchain/simple_ERC20.v.py"
+PATH_TO_CONTRACT = "simple/ERC20.v.py"
 
 MAX_UINT256 = (2 ** 256) - 1 # Maximum allowed uint256 value
 MAX_UINT128 = (2 ** 128) - 1 # Maximum allowed num128 valie
@@ -48,4 +49,8 @@ class SimpleERC20TestCase(SimpleBaseTestCase):
         self.assertEqual(self.c.allowance(self.t.a1, self.t.a2), 0)
         self.assertEqual(self.c.allowance(self.t.a1, self.t.a3), 0)
         self.assertEqual(self.c.allowance(self.t.a2, self.t.a3), 0)
+
+
+if __name__ == '__main__':
+    unittest.main()
 
