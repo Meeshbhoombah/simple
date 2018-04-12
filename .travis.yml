@@ -6,11 +6,24 @@
 language: python
 python:
     - "3.6"
+
 before_install:
     - sudo apt-get update
     - sudo apt-get install python3
+
+    # Install Vyper
+    - sudo apt-get install build-essential libssl-dev libffi-dev
+    - git clone https://github.com/ethereum/vyper.git
+    - cd vyper
+    - make
+    - make test
+    - cd ../
+
 install:
-    - pip install -r requirements.txt --exclude exclude.txt
+    # Remove Vyper from pip
+    - grep -vwE "(vyper==*)" requirements > requirements.txt
+    - pip install -r requirements.txt
+
 script:
     pytest
 
