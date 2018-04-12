@@ -20,7 +20,7 @@ before_install:
 
 install:
     # Remove Vyper from pip
-    - grep -vwE "(vyper==*)" requirements.txt > requirements.txt
+    - grep -vwE "(vyper==0.0.4)" requirements.txt > requirements.txt
     - pip install -r requirements.txt
 
 script:
