@@ -1,4 +1,4 @@
-.PHONY:
+.PHONY: private
 
 private: install-private run-private
 
