@@ -21,6 +21,18 @@ Install the dependencies with `pip`.
 $ pip install -r requirements.txt
 ```
 4. Run tests
+5. Create a private Network.
+
+The Simple contracts are for education purposes only (although the ERC20 contract is a 
+valid ERC20 token). As such, they are not deployed on the `mainnet`. For running the SMS client
+a private network can be deployed.
+
+```bash
+$ make private
+```
+
+`make private` installs `geth` (the Golang implementation of the Ethereum client) each time it
+runs. After initally using `make private` in the future use `make run-private`
 
 <!--
 ```
