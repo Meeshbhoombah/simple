@@ -14,11 +14,11 @@ virutal environment to avoid conflicts.
 1. Create a virtual environment with `virtualenv` using Homebrew's version of python, 
    `python3`
 2. Install vyper
-3. Install requirements.
+3. Install requirements without Vyper.
 
 Install the dependencies with `pip`.
 ```
-$ pip install -r requirements.txt -exclude exclude.txt
+$ pip install -r requirements.txt
 ```
 4. Run tests
 
