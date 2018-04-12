@@ -10,7 +10,7 @@ before_install:
     - sudo apt-get update
     - sudo apt-get install python3
 install:
-    - pip install -r requirements.txt
+    - pip install -r requirements.txt --exclude exclude.txt
 script:
     pytest
 
