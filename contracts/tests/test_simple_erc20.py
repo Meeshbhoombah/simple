@@ -9,7 +9,7 @@ Test the smart contract implementing the ERC-20 compliant version of simple.
 import unittest
 import ethereum.utils as utils
 import ethereum.abi as abi
-from contracts.tests.test_base import SimpleBaseTestCase
+from .test_base import SimpleBaseTestCase
 
 
 PATH_TO_CONTRACT = "simple/ERC20.v.py"

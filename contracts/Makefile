@@ -10,10 +10,15 @@ env:
 
 	virtualenv venv
 	. venv/bin/activate
+	pip install -r requirements.txt
 
 test:
 
 	pytest
+
+test-silent:
+
+	pytest -q
 
 vyper-install:
 ifeq ($(shell uname),Darwin)
