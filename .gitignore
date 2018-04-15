@@ -1,5 +1,9 @@
-# VM
+# Mac
+.DS_Store
+
+# Proj
 venv/
+.coverage
 
 # Vim
 *.swo

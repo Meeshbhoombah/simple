@@ -12,7 +12,7 @@ import ethereum.abi as abi
 from .test_base import SimpleBaseTestCase
 
 
-PATH_TO_CONTRACT = "simple/ERC20.v.py"
+PATH_TO_CONTRACT = "contracts/ERC20.v.py"
 
 MAX_UINT256 = (2 ** 256) - 1 # Maximum allowed uint256 value
 MAX_UINT128 = (2 ** 128) - 1 # Maximum allowed num128 valie

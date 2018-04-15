@@ -1,0 +1,19 @@
+version: '1'
+
+services:
+    node:
+        build: .
+        image: networks/Dockerfile
+        expose:
+            - "30303"
+        volumes:
+            - connection_data:/tmp
+
+volumes:
+    connection_data:
+        driver: local
+        driver_opts:
+            type: tmpfs
+            device: tmpfs
+            o: "size=10m"
+
