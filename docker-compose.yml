@@ -3,11 +3,11 @@ version: '1'
 services:
     node:
         build: .
-        image: networks/Dockerfile
+        image: networks/Dockerfile.node
         expose:
             - "30303"
         volumes:
-            - connection_data:/tmp
+            - connection_data:/network/chain/tmp
 
 volumes:
     connection_data:
