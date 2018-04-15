@@ -20,6 +20,8 @@ test-silent:
 
 	pytest -q
 
+# It is recommended that you install Vyper in a 
+# virtual environment
 vyper-install:
 ifeq ($(shell uname),Darwin)
 
