@@ -33,9 +33,13 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://{usr}:{dbpass}@{host}:5432
 
 @app.before_first_request
 def launch_database():
-    # TODO: Create database
-    # TODO: Connect to blockchain
-    pass
+    """Initalize and create all models."""
+    from.usr.model import User
+
+    User.db.init_app(app)
+
+    with app.app_context():
+        models.db.create_all()
 
 
 """ ROUTES """
@@ -44,5 +48,4 @@ from .usr.resource import User
 
 api.add_resource(User, '/user')
 #app.add_resource(Twilio, '/twilio')
-
 
