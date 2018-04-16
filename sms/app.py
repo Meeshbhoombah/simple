@@ -12,14 +12,18 @@ Website:
 from config import config
 from flask import Flask, jsonify
 from flask_restful import Resource, Api, reqparse
+from flask_sqlalchemy import SQLAlchemy
 
 
+""" CONFIG """
 app = Flask(__name__)
 
 # Using config object from `config.py`
 app.config.from_object(config['default']) 
 config['default'].init_app(app)
 
+
+""" CONNECT TO DATABASE """
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://{usr}:{dbpass}@{host}:5432/{db}'.format(
     usr = app.config['DBUSER'],
     dbpass = app.config['DBPASS'],
@@ -27,8 +31,15 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://{usr}:{dbpass}@{host}:5432
     db = app.config['DBNAME']
 )
 
+db = SQLAlchemy(app)
+
+
 @app.before_first_request
-# TODO: init database
+def launch_database():
+    # TODO: Create database
+    # TODO: Connect to blockchain
+    pass
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0')
