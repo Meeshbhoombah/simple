@@ -4,9 +4,7 @@
 The user data for Simple is stored off-chain for minimal gas usage, etc
 """
 
-from flask_sqlalchemy import SQLAlchemy
-
-db = SQLAlchemy()
+from app import db
 
 class User(db.Model):
 

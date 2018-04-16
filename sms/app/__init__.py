@@ -1,0 +1,48 @@
+#!usr/bin/python3
+"""Main entrypoint into 'Simple SMS Client' Flask and SQL application.
+
+Demonstates functionality of the simple blockchain and smart contracts in a 
+tangible way.
+
+License: MIT
+Website:
+"""
+
+from .config import config
+from flask import Flask, jsonify
+from flask_restful import Resource, Api, reqparse
+from flask_sqlalchemy import SQLAlchemy
+
+""" CONFIG """
+app = Flask(__name__)
+
+# Using config object from `config.py`
+app.config.from_object(config['default']) 
+config['default'].init_app(app)
+
+api = Api(app)
+
+""" CONNECT TO DATABASE """
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://{usr}:{dbpass}@{host}:5432/{db}'.format(
+    usr = app.config['DBUSER'],
+    dbpass = app.config['DBPASS'],
+    host = app.config['DBHOST'],
+    db = app.config['DBNAME']
+)
+
+
+@app.before_first_request
+def launch_database():
+    # TODO: Create database
+    # TODO: Connect to blockchain
+    pass
+
+
+""" ROUTES """
+#from client.resource import Twilio
+from .usr.resource import User
+
+api.add_resource(User, '/user')
+#app.add_resource(Twilio, '/twilio')
+
+
