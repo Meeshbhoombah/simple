@@ -4,21 +4,25 @@
 The user data for Simple is stored off-chain for minimal gas usage, etc
 """
 
-from app import db
+from flask_sqlalchemy import SQLAlchemy
 
-class User(db.Model):
+user_db = SQLAlchemy()
 
-    __tablename__ == 'users'
+class User(user_db.Model):
+    __tablename__ = 'users'
 
-    id = db.Column(db.Integer, primary_key = True)
-    username = db.Column(db.String(120), unique = True, nullable = False)
-    phone = db.Column(db.Integer(10), unique = True, nullable = False)
-    address = db.Column(db.String(120), unique = True, nullable = False)
-    balance = db.Column(db.String(120), unique = False, nullable = True)
-    first_name = db.Column(db.String(20), unique = False, nullable = True)
-    created_on = db.Column(db.DateTime, default=db.func.now())
-    updated_on = db.Column(db.DateTime, default=db.func.now(), onupdate=db.func.now())
+    id = user_db.Column(user_db.Integer, primary_key = True)
+    username = user_db.Column(user_db.String(120), unique = True, nullable = True)
+    phone = user_db.Column(user_db.String(10), unique = True, nullable = False)
+    address = user_db.Column(user_db.String(120), unique = True, nullable = False)
+    balance = user_db.Column(user_db.String(120), unique = False, nullable = True)
+    first_name = user_db.Column(user_db.String(20), unique = False, nullable = True)
+    created_on = user_db.Column(user_db.DateTime, default=user_db.func.now())
+    updated_on = user_db.Column(user_db.DateTime, default=user_db.func.now(), onupdate=user_db.func.now())
 
+    def save_to_db(self):
+        user_db.session.add(self)
+        user_db.session.commit()
     
     @classmethod
     def find_by_username(cls, username):
@@ -33,8 +37,8 @@ class User(db.Model):
     @classmethod
     def delete_all(cls):
         try:
-            num_rows_deleted = db.session.query(cls).delete()
-            db.session.commit()
+            num_rows_deleted = user_db.session.query(cls).delete()
+            user_db.session.commit()
             return {'message': '{} row(s) deleted'.format(num_rows_deleted)}
         except:
             return {'message': 'Something went wrong'}

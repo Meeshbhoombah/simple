@@ -13,7 +13,7 @@ from flask import Flask, jsonify
 from flask_restful import Resource, Api, reqparse
 from flask_sqlalchemy import SQLAlchemy
 
-""" CONFIG """
+"""CONFIG"""
 app = Flask(__name__)
 
 # Using config object from `config.py`
@@ -22,7 +22,7 @@ config['default'].init_app(app)
 
 api = Api(app)
 
-""" CONNECT TO DATABASE """
+"""CONNECT TO DATABASE"""
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://{usr}:{dbpass}@{host}:5432/{db}'.format(
     usr = app.config['DBUSER'],
     dbpass = app.config['DBPASS'],
@@ -31,21 +31,18 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://{usr}:{dbpass}@{host}:5432
 )
 
 
-@app.before_first_request
-def launch_database():
-    """Initalize and create all models."""
-    from.usr.model import User
+"""MODELS"""
+from .usr.model import user_db
+user_db.init_app(app)
 
-    User.db.init_app(app)
-
-    with app.app_context():
-        models.db.create_all()
+with app.app_context():
+    user_db.create_all()
 
 
-""" ROUTES """
-#from client.resource import Twilio
+"""ROUTES"""
+from .twilio.resource import Twilio
 from .usr.resource import User
 
 api.add_resource(User, '/user')
-#app.add_resource(Twilio, '/twilio')
+app.add_resource(Client, '/twilio')
 
