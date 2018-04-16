@@ -5,14 +5,16 @@ import pprint
 from flask_restful import Resource, reqparse
 from twilio.twiml.messaging_response import MessagingResponse
 
-parser = reqparse.RequestParser()
-
 class User(Resource):
 
     def post(self):
         """Recieve message from Twilio and act accordingly"""
         parser = reqparse.RequestParser()
-        data = parser.parseargs()
+        parser.add_argument('message', help = 'This field cannot be blank', required = True)
+
+        data = parser.parse_args()
         pprint.pprint(data)
+
+        return {'status': 'OK'}, 200
 
 
