@@ -2,9 +2,11 @@
 """
 
 from flask_restful import Resource, reqparse
-from usr.model import User
+from models import User
 
-class Conversation(Resource):
+class Chat(Resource):
 
-
+    def post(self):
+        """Recieve message from Twilio and act accordingly"""
+        
 

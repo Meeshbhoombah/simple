@@ -13,6 +13,9 @@ class Config(object):
     DBPASS = ''
     DBNAME = ''
 
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
+
+
     @staticmethod
     def init_app(app):
         pass
@@ -29,7 +32,6 @@ class Development(Config):
 class Production(Config):
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or \
         'sqlite:///' + os.path.join(basedir, 'data.sqlite')
-
 
 
 config = {
