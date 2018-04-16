@@ -4,7 +4,9 @@
 The user data for Simple is stored off-chain for minimal gas usage, etc
 """
 
-from app import db
+from flask_sqlalchemy import SQLAlchemy
+
+db = SQLAlchemy()
 
 class User(db.Model):
 
@@ -12,10 +14,10 @@ class User(db.Model):
 
     id = db.Column(db.Integer, primary_key = True)
     username = db.Column(db.String(120), unique = True, nullable = False)
-    phone = db.Column(db.Integer(10)), unique = True, nullable = False)
+    phone = db.Column(db.Integer(10), unique = True, nullable = False)
     address = db.Column(db.String(120), unique = True, nullable = False)
     balance = db.Column(db.String(120), unique = False, nullable = True)
-    first_name = db.Column(db.String(20)), unique = False, nullable = True)
+    first_name = db.Column(db.String(20), unique = False, nullable = True)
     created_on = db.Column(db.DateTime, default=db.func.now())
     updated_on = db.Column(db.DateTime, default=db.func.now(), onupdate=db.func.now())
 

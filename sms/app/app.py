@@ -8,12 +8,10 @@ License: MIT
 Website:
 """
 
-
 from config import config
 from flask import Flask, jsonify
 from flask_restful import Resource, Api, reqparse
 from flask_sqlalchemy import SQLAlchemy
-
 
 """ CONFIG """
 app = Flask(__name__)
@@ -22,6 +20,7 @@ app = Flask(__name__)
 app.config.from_object(config['default']) 
 config['default'].init_app(app)
 
+api = Api(app)
 
 """ CONNECT TO DATABASE """
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://{usr}:{dbpass}@{host}:5432/{db}'.format(
@@ -31,14 +30,17 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://{usr}:{dbpass}@{host}:5432
     db = app.config['DBNAME']
 )
 
-db = SQLAlchemy(app)
-
 
 @app.before_first_request
 def launch_database():
     # TODO: Create database
     # TODO: Connect to blockchain
     pass
+
+
+""" ROUTES """
+from .resources import Conversation
+api.add_resource(Conversation, '/twilio')
 
 
 if __name__ == '__main__':

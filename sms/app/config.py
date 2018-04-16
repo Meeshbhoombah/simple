@@ -15,6 +15,8 @@ class Config(object):
 
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
+    TWILIO_SID = '' 
+    TWILIO_AUTH = ''
 
     @staticmethod
     def init_app(app):
@@ -28,10 +30,16 @@ class Development(Config):
     DBPASS = None
     DBNAME = 'simpledev'
 
+    TWILIO_SID = os.environ.get('TWILIO_SID_TEST')
+    TWILIO_AUTH = os.environ.get('TWILIO_AUTH_TEST')
+
 
 class Production(Config):
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or \
         'sqlite:///' + os.path.join(basedir, 'data.sqlite')
+
+    TWILIO_SID = os.environ.get('TWILIO_SID')
+    TWILIO_AUTH = os.environ.get('TWILIO_AUTH')
 
 
 config = {
