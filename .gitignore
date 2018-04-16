@@ -4,6 +4,7 @@
 # Proj
 venv/
 .coverage
+.env
 
 # Vim
 *.swo
