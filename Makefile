@@ -2,9 +2,11 @@
 
 init:
 
-network-deploy:
+network:
 
-	docker build -t network/Dockerfile.base .
+	cd network/chain/
+	docker build -t substrate/chain .
+	cd ../../
 
 	docker-compose up -d
 	echo "##################################"

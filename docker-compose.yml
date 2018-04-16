@@ -1,11 +1,11 @@
-version: '1'
+version: '2'
 
 services:
     node:
-        build: .
-        image: networks/Dockerfile.node
+        build: network/
+        image: substrate/network
         expose:
-            - "30303"
+            - "3000"
         volumes:
             - connection_data:/network/chain/tmp
 

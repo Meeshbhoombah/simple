@@ -4,7 +4,7 @@ MAINTAINER Rohan Mishra @Meeshbhoombah
 
 WORKDIR /opt/eth
 
-COPY ./chain/genesis.json .
+COPY ./genesis.json .
 
 RUN apt-get update && \
     apt-get -y install software-properties-common && \
