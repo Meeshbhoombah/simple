@@ -11,7 +11,7 @@ document is in the early stages of its creation, please excuse its sparcity.
 1. Docker
 2. Makefile
 
-#### Manual
+#### Manual Installation
 Fork and/or clone the repository. It is recommended to build Python packages in a 
 virutal environment to avoid conflicts.
 
