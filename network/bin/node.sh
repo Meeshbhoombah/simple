@@ -5,7 +5,7 @@ JS="'enode://' + admin.nodeInfo.id + '@' + '$(hostname -i):' + admin.nodeInfo.po
 ENODE_URL=$(geth --datadir ./chain --exec "${JS}" console 2>/dev/null | sed -e 's/^"\(.*\)"$/\1/')
 
 echo "Adding this node's  connection details to /tmp/nodes"
-echo $ENODE_URL >> /tmp/nodes
+echo $ENODE_URL >> /network/chain/tmp/nodes
 
 # The following block will run every time a node is run for the first time. If
 # docker-compose down is executed, then all files are removed and this will run
@@ -25,7 +25,7 @@ while read -r LINE; do
     if [ ${LINE} != ${ENODE_URL} ]; then
         BOOTNODES="${LINE},${BOOTNODES}"
     fi
-done < /tmp/nodes
+done < /network/chain/tmp/nodes
 
 echo "Starting geth with bootnodes: ${BOOTNODES%?}"
 

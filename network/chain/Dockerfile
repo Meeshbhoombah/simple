@@ -12,6 +12,6 @@ RUN apt-get update && \
     apt-get update && \
     apt-get -y install vim ethereum
 
-RUN geth --datadir ./data init /opt/eth/genesis.json
-RUN mkdir -p ~/.ethash && geth --datadir ./data makedag 0 ~/.ethash
+RUN geth --datadir ./chain init /opt/eth/genesis.json
+RUN mkdir -p ~/.ethash && geth --datadir ./chain makedag 0 ~/.ethash
 
