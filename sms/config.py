@@ -20,10 +20,10 @@ class Config(object):
 
 class Development(Config):
     DEBUG = True
-    DBUSER = ''
-    DBHOST = ''
-    DBPASS = ''
-    DBNAME = ''
+    DBUSER = 'rohan'
+    DBHOST = '127.0.0.1'
+    DBPASS = None
+    DBNAME = 'simpledev'
 
 
 class Production(Config):

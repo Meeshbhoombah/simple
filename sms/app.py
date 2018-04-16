@@ -27,9 +27,8 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://{usr}:{dbpass}@{host}:5432
     db = app.config['DBNAME']
 )
 
-
 @app.before_first_request
-# TODO: init databas
+# TODO: init database
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0')
