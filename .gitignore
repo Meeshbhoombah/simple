@@ -5,6 +5,7 @@
 venv/
 .coverage
 .env
+env
 
 # Vim
 *.swo

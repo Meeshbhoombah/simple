@@ -8,7 +8,12 @@ services:
             - "3000"
         volumes:
             - connection_data:/network/chain/tmp
-
+    sms:
+        build: sms/
+        image: substrate/sms
+        expose:
+            - "5000"
+        
 volumes:
     connection_data:
         driver: local

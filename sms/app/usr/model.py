@@ -27,6 +27,7 @@ class User(user_db.Model):
     @classmethod
     def exists(cls, phone):
         exists = cls.query.filter_by(phone = phone).scalar() is not None
+        return exists
 
     
     @classmethod
