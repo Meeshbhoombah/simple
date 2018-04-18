@@ -25,13 +25,18 @@ class User(user_db.Model):
         user_db.session.commit()
     
     @classmethod
+    def exists(cls, phone):
+        exists = cls.query.filter_by(phone = phone).scalar() is not None
+
+    
+    @classmethod
     def find_by_username(cls, username):
         return cls.query.filter_by(username = username).first()
 
 
     @classmethod
-    def find_by_phonenumber(cls, phonenumber):
-        return cls.query.filter_by(phonenumber = phonenumber).first()
+    def find_by_phonenumber(cls, phone):
+        return cls.query.filter_by(phone = phone).first()
 
     
     @classmethod

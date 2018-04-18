@@ -8,6 +8,7 @@ License: MIT
 Website:
 """
 
+import os
 from .config import config
 from flask import Flask, jsonify
 from flask_restful import Resource, Api, reqparse
@@ -17,10 +18,21 @@ from flask_sqlalchemy import SQLAlchemy
 app = Flask(__name__)
 
 # Using config object from `config.py`
-app.config.from_object(config['default']) 
-config['default'].init_app(app)
+server = 'default'
+
+try:
+    os.environ.get('FLASK_ENV')
+except:
+    pass
+
+app.config.from_object(config[server]) 
+config[server].init_app(app)
 
 api = Api(app)
+
+"""CONNECT TO PRIVATE NETWORK NODE"""
+from web3 import Web3, HTTPProvider
+
 
 """CONNECT TO DATABASE"""
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://{usr}:{dbpass}@{host}:5432/{db}'.format(
@@ -30,8 +42,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://{usr}:{dbpass}@{host}:5432
     db = app.config['DBNAME']
 )
 
-
-"""MODELS"""
+# MODELS
 from .usr.model import user_db
 user_db.init_app(app)
 
@@ -40,9 +51,9 @@ with app.app_context():
 
 
 """ROUTES"""
-from .twilio.resource import Twilio
+from .twilio.resource import Client
 from .usr.resource import User
 
 api.add_resource(User, '/user')
-app.add_resource(Client, '/twilio')
+api.add_resource(Client, '/twilio')
 
