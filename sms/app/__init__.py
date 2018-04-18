@@ -32,6 +32,7 @@ api = Api(app)
 
 """CONNECT TO PRIVATE NETWORK NODE"""
 from web3 import Web3, HTTPProvider
+from vyper import compiler
 
 
 """CONNECT TO DATABASE"""
