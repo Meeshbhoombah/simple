@@ -13,8 +13,8 @@ class User(user_db.Model):
 
     id = user_db.Column(user_db.Integer, primary_key = True)
     username = user_db.Column(user_db.String(120), unique = True, nullable = True)
-    phone = user_db.Column(user_db.String(10), unique = True, nullable = False)
-    address = user_db.Column(user_db.String(120), unique = True, nullable = False)
+    phone = user_db.Column(user_db.String(12), unique = True, nullable = False)
+    private = user_db.Column(user_db.String(120), unique = True, nullable = True)
     balance = user_db.Column(user_db.String(120), unique = False, nullable = True)
     first_name = user_db.Column(user_db.String(20), unique = False, nullable = True)
     created_on = user_db.Column(user_db.DateTime, default=user_db.func.now())

@@ -31,8 +31,8 @@ class Development(Config):
     DBPASS = None
     DBNAME = 'simpledev'
 
-    TWILIO_SID = os.environ.get('TWILIO_SID_TEST')
-    TWILIO_AUTH = os.environ.get('TWILIO_AUTH_TEST')
+    TWILIO_SID = os.environ.get('TWILIO_SID')
+    TWILIO_AUTH = os.environ.get('TWILIO_AUTH')
 
 
 class Production(Config):
