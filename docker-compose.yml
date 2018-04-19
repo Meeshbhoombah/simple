@@ -11,8 +11,16 @@ services:
     sms:
         build: sms/
         image: substrate/sms
+        environment:
+            - TWILIO_SID
+            - TWILIO_AUTH
+            - TWILIO_SID_TEST
+            - TWILIO_AUTH_TEST
+            - FLASK_ENV
         expose:
             - "5000"
+        command:
+            - python run.py
         
 volumes:
     connection_data:

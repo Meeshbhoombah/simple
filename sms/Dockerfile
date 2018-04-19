@@ -11,13 +11,13 @@ WORKDIR /sms
 
 COPY requirements.txt /sms
 COPY run.py /sms
-COPY /app /sms
-COPY .env /sms
-COPY /bin/run.sh sms
+COPY ./app /sms
+COPY run.sh /sms
+RUN chmod +x run.sh
 
 RUN pip install -r requirements.txt
-RUN .env
-RUN ./run.sh
-
+ENTRYPOINT ['python']
+CMD ['run.py']
+ 
 EXPOSE 5000
 

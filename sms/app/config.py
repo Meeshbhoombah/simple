@@ -24,7 +24,7 @@ class Config(object):
 
 
 class Development(Config):
-    DEBUG = True
+    DEBUG = False
     HOST = '0.0.0.0'
     DBUSER = 'rohan'
     DBHOST = '127.0.0.1'
