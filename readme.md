@@ -5,7 +5,7 @@ A node of the simple blockchain 🤑 implemented in Python 🐍 and Vyper.
 - [x] ERC-20 token implemented in Vyper
 - [ ] Bitcoin-like token implmented in Solidity
 - [x] 100% test coverage on contracts
-- [ ] Flask server for sending tokens via SMS
+- [x] Flask server for sending tokens via SMS
 - [x] Private Ethereum Network
 - [x] Running on Docker
 
