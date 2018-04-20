@@ -1,38 +1,49 @@
 # Simple
-A bare-bones cryptocurrency implemented in Python.
+A node of the simple blockchain 🤑 implemented in Python 🐍 and Vyper.
 
-## Installation
-1. Clone this repository
-"""
-$ git clone https://github.com/Meeshbhoombah/simple
-"""
+**Features:**
+- [x] ERC-20 token implemented in Vyper
+- [ ] Bitcoin-like token implmented in Solidity
+- [x] 100% test coverage on contracts
+- [ ] Flask server for sending tokens via SMS
+- [x] Private Ethereum Network
+- [x] Running on Docker
 
-1. Create and run a virtualenv (recommended BUT not required).
-"""
-$ virtualenv venv
-New python executable in /Users/usr/Desktop/venv/bin/python
-Installing setuptools, pip, wheel...done.
+## Getting Started
 
-$ . venv/bin/activate
-"""
-After running `. venv/bin/activate` you should see the virtualenv active
-in the shell.
+These instructions will get you a copy of the project up and running on your local machine 
+for development and testing purposes. Instructions for have not yet been completed. This
+document is in the early stages of its creation, please excuse its sparcity.
 
-1. Install the 
+### Installing
+1. Docker
+2. Makefile
 
-## Features
-- [ ] Transaction State-based machine
-- [ ] Account System
-    - External accounts
-    - Contract account
-- [ ] Secured and validated transactions/state transactions
-- [ ] Dynamicly sending Smart Contracts addresses
-    - GAS to deloy contract
-    - GAS to run contract
-- [ ] Cryptocurrency
+#### Manual Installation
+Fork and/or clone the repository. It is recommended to build Python packages in a 
+virutal environment to avoid conflicts.
 
+1. Create a virtual environment with `virtualenv` using Homebrew's version of python, 
+   `python3`
+2. Install vyper
+3. Install requirements without Vyper.
 
-- [ ] Runnable Terminal Node:
-    + [ ] Clone Blockchain (DNS Server lookup)
-    + [ ] Simple terminal commands
+Install the dependencies with `pip`.
+```
+$ pip install -r requirements.txt
+```
+4. Run tests
+5. Create a private Network.
+
+The Simple contracts are for education purposes only (although the ERC20 contract is a 
+valid ERC20 token). As such, they are not deployed on the `mainnet`. For running the SMS client
+a private network can be deployed.
+
+```bash
+$ make private
+```
+
+`make private` installs `geth` (the Golang implementation of the Ethereum client) each time it
+runs. After initally using `make private` in the future use `make run-private`
+
 

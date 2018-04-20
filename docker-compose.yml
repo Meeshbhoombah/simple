@@ -1,0 +1,32 @@
+version: '2'
+
+services:
+    node:
+        build: network/
+        image: substrate/network
+        expose:
+            - "3000"
+        volumes:
+            - connection_data:/network/chain/tmp
+    sms:
+        build: sms/
+        image: substrate/sms
+        environment:
+            - TWILIO_SID
+            - TWILIO_AUTH
+            - TWILIO_SID_TEST
+            - TWILIO_AUTH_TEST
+            - FLASK_ENV
+        expose:
+            - "5000"
+        command:
+            - python run.py
+        
+volumes:
+    connection_data:
+        driver: local
+        driver_opts:
+            type: tmpfs
+            device: tmpfs
+            o: "size=10m"
+

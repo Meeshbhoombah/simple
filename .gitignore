@@ -1,2 +1,17 @@
+# Mac
 .DS_Store
+
+# Proj
+venv/
+.coverage
+.env
+env
+
+# Vim
+*.swo
+*.swp
+
+# Python
+.pytest_cache/
+.cache
 
