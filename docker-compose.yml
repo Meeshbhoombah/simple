@@ -9,8 +9,8 @@ services:
         volumes:
             - connection_data:/network/chain/tmp
     sms:
-        build: sms/
-        image: substrate/sms
+        build: client/
+        image: substrate/client
         environment:
             - TWILIO_SID
             - TWILIO_AUTH
