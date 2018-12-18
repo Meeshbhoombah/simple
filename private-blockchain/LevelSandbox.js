@@ -14,7 +14,7 @@ class LevelSandbox {
     // Get data from levelDB with key (Promise)
     getLevelDBData(key){
         let self = this;
-        return new Promise(function(resolve, reject) {
+        return new Promise((resolve, reject) => {
             // Add your code here, remember un Promises you need to resolve() or reject()
         });
     }
@@ -22,7 +22,7 @@ class LevelSandbox {
     // Add data to levelDB with key and value (Promise)
     addLevelDBData(key, value) {
         let self = this;
-        return new Promise(function(resolve, reject) {
+        return new Promise((resolve, reject) => {
             // Add your code here, remember un Promises you need to resolve() or reject() 
         });
     }
@@ -30,7 +30,7 @@ class LevelSandbox {
     // Method that return the height
     getBlocksCount() {
         let self = this;
-        return new Promise(function(resolve, reject){
+        return new Promise((resolve, reject) => {
             // Add your code here, remember un Promises you need to resolve() or reject()
         });
     }

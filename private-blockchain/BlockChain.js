@@ -9,7 +9,7 @@ const Block = require('./Block.js');
 class Blockchain {
 
     constructor() {
-        this.bd = new LevelSandbox.LevelSandbox();
+        this.db = new LevelSandbox.LevelSandbox();
         this.generateGenesisBlock();
     }
 
