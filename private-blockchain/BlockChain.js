@@ -3,18 +3,22 @@
 |  ================================================*/
 
 const SHA256 = require('crypto-js/sha256');
-const LevelSandbox = require('./LevelSandbox.js');
+const Level = require('./LevelInterface.js');
 const Block = require('./Block.js');
 
 class Blockchain {
 
     constructor() {
-        this.db = new LevelSandbox.LevelSandbox();
+        this.db = new Level.Wrapper();
         this.generateGenesisBlock();
     }
 
+    // Auxiliar method to create a Genesis Block (always with height= 0)
+    // You have to options, because the method will always execute when you create your blockchain
+    // you will need to set this up statically or instead you can verify if the height !== 0 then you
+    // will not create the genesis block
     generateGenesisBlock() {
-        this.getBlockHeight()
+        // Add your code here
     }
 
     // Get block height, it is auxiliar method that return the height of the blockchain
