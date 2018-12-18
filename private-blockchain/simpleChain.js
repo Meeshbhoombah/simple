@@ -8,7 +8,6 @@ const Block = require('./Block.js');
 let myBlockChain = new BlockChain.Blockchain();
 
 console.log('Initalized Simple Chain...');
-
 setTimeout(function () {
 	console.log("Waiting...")
 }, 10000);

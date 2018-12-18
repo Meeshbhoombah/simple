@@ -6,36 +6,58 @@ const level = require('level');
 const chainDB = './chaindata';
 
 class LevelSandbox {
-
     constructor() {
         this.db = level(chainDB);
     }
 
-    // Get data from levelDB with key (Promise)
-    getLevelDBData(key){
-        let self = this;
+    // Add data to levelDB with key and value (Promise)
+    addLevelDBData(key, value) {
+        let _this = this;
         return new Promise((resolve, reject) => {
-            // Add your code here, remember un Promises you need to resolve() or reject()
+            _this.db.put(key, value, function(err) {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve();  
+                }
+            });
         });
     }
 
-    // Add data to levelDB with key and value (Promise)
-    addLevelDBData(key, value) {
-        let self = this;
+    // Get data from levelDB with key (Promise)
+    getLevelDBData(key){
+        let _this = this;
         return new Promise((resolve, reject) => {
-            // Add your code here, remember un Promises you need to resolve() or reject() 
+            _this.db.get(key, function(err, result) {
+                if (err) {
+                    reject(err); 
+                } else {
+                    resolve(result);
+                }
+            });
         });
     }
 
     // Method that return the height
     getBlocksCount() {
-        let self = this;
+        let _this = this;
+   
+        var i = 0;
+
         return new Promise((resolve, reject) => {
-            // Add your code here, remember un Promises you need to resolve() or reject()
+            _this.db.createReadStream()
+                .on('error', (err) => {
+                    reject(err);
+                })
+                .on('data', (data) => {
+                    i++;
+                })
+                .on('close', (data) => {
+                    resolve(i);
+                })
         });
     }
-        
-
 }
 
 module.exports.LevelSandbox = LevelSandbox;
+
