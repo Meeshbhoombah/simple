@@ -13,17 +13,24 @@ class Blockchain {
         this.generateGenesisBlock();
     }
 
-    // Auxiliar method to create a Genesis Block (always with height= 0)
-    // You have to options, because the method will always execute when you create your blockchain
-    // you will need to set this up statically or instead you can verify if the height !== 0 then you
-    // will not create the genesis block
-    generateGenesisBlock() {
-        // Add your code here
+    async generateGenesisBlock() {
+        let _this = this;
+
+        // check if any blocks have been created
+        var height = await _this.getBlockHeight();
+        if (height !== 0) {
+            return 
+        } else {
+            let genesisBlock = new Block.Block('04/20/2017 - Rohan on brink of bail out from School')
+            console.log(genesisBlock) 
+        }
     }
 
     // Get block height, it is auxiliar method that return the height of the blockchain
-    getBlockHeight() {
-        // Add your code here
+    async getBlockHeight() {
+        let _this = this;
+
+        return await _this.db.getBlocksCount();
     }
 
     // Add new block

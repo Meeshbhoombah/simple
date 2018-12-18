@@ -19,7 +19,6 @@ setTimeout(function () {
 (function theLoop (i) {
 	setTimeout(function () {
 		let blockTest = new Block.Block("Test Block - " + (i + 1));
-                console.log(blockTest)
 
 		// Be careful this only will work if your method 'addBlock' in the 
                 // Blockchain.js file return a Promise
