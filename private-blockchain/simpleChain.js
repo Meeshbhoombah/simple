@@ -18,7 +18,7 @@ setTimeout(function () {
  ******************************************/
 (function theLoop (i) {
 	setTimeout(function () {
-		let blockTest = new Block.Block("Test Block - " + (i));
+		let blockTest = new Block.Block("Test Block - " + (i + 1));
 
 		// Be careful this only will work if your method 'addBlock' in the 
                 // Blockchain.js file return a Promise
@@ -28,7 +28,7 @@ setTimeout(function () {
 			if (i < 10) theLoop(i);
 		});
 	}, 10000);
-})(1); // Genesis Block = 0, create first Block
+})(0); 
 
 
 /***********************************************

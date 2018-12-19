@@ -14,21 +14,15 @@ class Blockchain {
 
     generateGenesisBlock() {
         let _this = this
-
-        _this.getBlockHeight()
-        .then((height) => {
-            if (height !== 0) {
-                return Error('Pre-existing Blocks: Block Height is ' + String(height));
-            } else {
-                let genesisBlock = new Block.Block('Fiat is dead. Long live USD Coupons.');
-                genesisBlock.time = new Date().getTime();
-                console.log(genesisBlock);
-                //_this.addBlock(genesisBlock);
-            }
+            
+        let genesisBlock = new Block.Block('20/April/2017 - Meesh on brink from bailout from LSD.');
+        _this.addBlock(genesisBlock)
+        .then((block) => {
+            console.log(block);
         })
         .catch((err) => {
             console.log(err);
-        });
+        })
     };
 
     getBlockHeight() {
@@ -46,9 +40,37 @@ class Blockchain {
     };
 
     addBlock(block) {
-        let _this = this;
+        block.time = new Date().getTime();
 
-        return new Promise((resolve, reject) => {
+        let _this = this;
+        return _this.getBlockHeight()
+        .then(async (blockHeight) => {
+            console.log(blockHeight)
+            block.height = blockHeight;
+
+            // check that previous block is not Genesis
+            if (block.height !== 0) {
+                var previousBlock = block.height - 1;
+                await _this.db.get(previousBlock)
+                .then((prevBlock) => {
+                    block.prevBlockHash = SHA256(JSON.stringify(prevBlock)).toString(); 
+                })
+                .catch((err) => {
+                    return err; 
+                })
+            } 
+
+            block.hash = SHA256(JSON.stringify(block)).toString();
+
+            return new Promise(async (resolve, reject) => {
+                await _this.db.put(block.height, block) 
+                .then(() => {
+                    resolve(block);
+                })
+                .catch((err) => {
+                    reject(err);
+                })
+            });
         })
     };
 
