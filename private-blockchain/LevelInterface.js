@@ -13,7 +13,6 @@ class Wrapper {
 
     addLevelDBData(key, value) {
         let _this = this;
-
         return new Promise((resolve, reject) => {
             _this.db.put(key, value, function(err) {
                 if (err) {
@@ -27,7 +26,6 @@ class Wrapper {
 
     getLevelDBData(key){
         let _this = this;
-
         return new Promise((resolve, reject) => {
             _this.db.get(key, function(err, result) {
                 if (err) {
