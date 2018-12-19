@@ -4,7 +4,7 @@
 
 class Block {
 
-	constructor(data){
+	constructor(data) {
             this.hash = '';
             this.hieght = 0;
             this.body = data;
@@ -15,3 +15,4 @@ class Block {
 }
 
 module.exports.Block = Block;
+
