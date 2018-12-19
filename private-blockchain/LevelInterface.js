@@ -6,7 +6,6 @@ const level = require('level');
 const chainDB = './chaindata';
 
 class Wrapper {
-
     constructor() {
         this.db = level(chainDB);
     }
