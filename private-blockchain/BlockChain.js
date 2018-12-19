@@ -21,7 +21,9 @@ class Blockchain {
                 return Error('Pre-existing Blocks: Block Height is ' + String(height));
             } else {
                 let genesisBlock = new Block.Block('Fiat is dead. Long live USD Coupons.');
-                _this.addBlock(genesisBlock);
+                genesisBlock.time = new Date().getTime();
+                console.log(genesisBlock);
+                //_this.addBlock(genesisBlock);
             }
         })
         .catch((err) => {
@@ -45,6 +47,9 @@ class Blockchain {
 
     addBlock(block) {
         let _this = this;
+
+        return new Promise((resolve, reject) => {
+        })
     };
 
     getBlock(height) {

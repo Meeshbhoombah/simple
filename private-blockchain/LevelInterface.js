@@ -10,7 +10,7 @@ class Wrapper {
         this.db = level(chainDB);
     }
 
-    addLevelDBData(key, value) {
+    put(key, value) {
         let _this = this;
         return new Promise((resolve, reject) => {
             _this.db.put(key, value, function(err) {
@@ -23,7 +23,7 @@ class Wrapper {
         });
     }
 
-    getLevelDBData(key){
+    get(key){
         let _this = this;
         return new Promise((resolve, reject) => {
             _this.db.get(key, function(err, result) {
