@@ -2,14 +2,14 @@
 |  Use this file to test your project.
 |  =========================================================*/
 
+console.log('Starting Simple Chain...')
 const BlockChain = require('./BlockChain.js');
 const Block = require('./Block.js');
 
 let myBlockChain = new BlockChain.Blockchain();
 
-console.log('Initalized Simple Chain...');
 setTimeout(function () {
-	console.log("Waiting...")
+	console.log("Initalized chain with Genesis Block...");
 }, 10000);
 
 
@@ -18,7 +18,7 @@ setTimeout(function () {
  ******************************************/
 (function theLoop (i) {
 	setTimeout(function () {
-		let blockTest = new Block.Block("Test Block - " + (i + 1));
+		let blockTest = new Block.Block("Test Block - " + (i));
 
 		// Be careful this only will work if your method 'addBlock' in the 
                 // Blockchain.js file return a Promise
@@ -28,7 +28,7 @@ setTimeout(function () {
 			if (i < 10) theLoop(i);
 		});
 	}, 10000);
-})(0);
+})(1); // Genesis Block = 0, create first Block
 
 
 /***********************************************
@@ -86,6 +86,7 @@ myBlockChain.getBlock(5).then((block) => {
 	}).catch((err) => { console.log(err);});
 }).catch((err) => { console.log(err);});
 
+
 myBlockChain.getBlock(6).then((block) => {
 	let blockAux = block;
 	blockAux.previousBlockHash = "jndininuud94j9i3j49dij9ijij39idj9oi";
@@ -118,3 +119,4 @@ myBlockChain.validateChain().then((errorLog) => {
 	console.log(error);
 })
 */
+

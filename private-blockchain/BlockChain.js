@@ -16,51 +16,58 @@ class Blockchain {
     async generateGenesisBlock() {
         let _this = this;
 
-        // check if any blocks have been created
-        var height = await _this.getBlockHeight();
+        let height = await _this.getBlockHeight()
         if (height !== 0) {
-            return 
+            return Error('Pre-existing Blocks: Block Height is ' + String(height))
         } else {
-            let genesisBlock = new Block.Block('04/20/2017 - Rohan on brink of bail out from School')
-            console.log(genesisBlock) 
+            let genesisBlock = new Block.Block('Fiat is dead. Long live Fiat Coupons.');
+            console.log(genesisBlock);
+            //_this.addBlock(genesisBlock);
         }
-    }
+    };
 
-    // Get block height, it is auxiliar method that return the height of the blockchain
     async getBlockHeight() {
         let _this = this;
 
-        return await _this.db.getBlocksCount();
-    }
+        await _this.db.getBlocksCount()
+        .then((height) => {
+            console.log(height)
+            return height
+        })
+        .catch((err) => {
+            return err 
+        });
+    };
 
-    // Add new block
     addBlock(block) {
-        // Add your code here
+        let _this = this;
     }
 
-    // Get Block By Height
     getBlock(height) {
+        let _this = this;
         // Add your code here
     }
 
-    // Validate if Block is being tampered by Block Height
     validateBlock(height) {
+        let _this = this;
         // Add your code here
     }
 
-    // Validate Blockchain
     validateChain() {
+        let _this = this;
         // Add your code here
     }
 
-    // Utility Method to Tamper a Block for Test Validation
-    // This method is for testing purpose
+    // Boilerplate provided test method to edit block
     _modifyBlock(height, block) {
         let self = this;
+
         return new Promise( (resolve, reject) => {
-            self.bd.addLevelDBData(height, JSON.stringify(block).toString()).then((blockModified) => {
+            self.db.addLevelDBData(height, JSON.stringify(block).toString())
+            .then((blockModified) => {
                 resolve(blockModified);
-            }).catch((err) => { console.log(err); reject(err)});
+            })
+            .catch((err) => { console.log(err); reject(err)});
         });
     }
    

@@ -6,11 +6,11 @@ const level = require('level');
 const chainDB = './chaindata';
 
 class Wrapper {
+
     constructor() {
         this.db = level(chainDB);
     }
 
-    // Add data to levelDB with key and value (Promise)
     addLevelDBData(key, value) {
         let _this = this;
 
@@ -25,7 +25,6 @@ class Wrapper {
         });
     }
 
-    // Get data from levelDB with key (Promise)
     getLevelDBData(key){
         let _this = this;
 
@@ -40,13 +39,12 @@ class Wrapper {
         });
     }
 
-    // Method that return the height
     getBlocksCount() {
         let _this = this;
    
         var i = 0;
-
         return new Promise((resolve, reject) => {
+            // Streams all underlying entities from store (start to end)
             _this.db.createReadStream()
                 .on('error', (err) => {
                     reject(err);

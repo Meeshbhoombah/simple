@@ -3,6 +3,7 @@
 |  ===============================================*/
 
 class Block {
+
 	constructor(data){
             this.hash = '';
             this.height = 0;
@@ -10,6 +11,7 @@ class Block {
             this.time = 0;
             this.previousblockhash = '';
 	}
+
 }
 
 module.exports.Block = Block;
