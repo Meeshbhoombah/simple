@@ -14,15 +14,30 @@ class Blockchain {
 
     generateGenesisBlock() {
         let _this = this
-            
-        let genesisBlock = new Block.Block('20/April/2017 - Meesh on brink from bailout from LSD.');
-        _this.addBlock(genesisBlock)
-        .then((block) => {
-            console.log(block);
+        
+        _this.getBlockHeight()
+        .then((blockHeight) => {
+            if (blockHeight == 0) {
+
+                let genBlock = new Block.Block('20/April/2017 - Meesh on brink from bailout from School.');
+
+                _this.addBlock(genBlock)
+                .then((genesisBlock) => {
+                    console.log('Initalized chain with Genesis Block: ', genBlock);
+                    return;
+                })
+                .catch((err) => {
+                    console.log('Failed to generate Genesis Block:', err);
+                    process.exit();
+                });
+
+            } else {
+                return; 
+            }
         })
         .catch((err) => {
-            console.log(err);
-        })
+            return err;
+        });
     };
 
     getBlockHeight() {
@@ -40,38 +55,44 @@ class Blockchain {
     };
 
     addBlock(block) {
+        let _this = this;
+
         block.time = new Date().getTime();
 
-        let _this = this;
         return _this.getBlockHeight()
         .then(async (blockHeight) => {
-            console.log(blockHeight)
-            block.height = blockHeight;
 
-            // check that previous block is not Genesis
+            block.height = blockHeight;
+            // Genesis block prevBlockHash is empty
             if (block.height !== 0) {
                 var previousBlock = block.height - 1;
                 await _this.db.get(previousBlock)
                 .then((prevBlock) => {
+                    // check's integirty
                     block.prevBlockHash = SHA256(JSON.stringify(prevBlock)).toString(); 
                 })
                 .catch((err) => {
                     return err; 
-                })
-            } 
+                });
+            }
 
+            // The block hash is composed
             block.hash = SHA256(JSON.stringify(block)).toString();
 
             return new Promise(async (resolve, reject) => {
-                await _this.db.put(block.height, block) 
+                await _this.db.put(block.height, block)
                 .then(() => {
                     resolve(block);
                 })
                 .catch((err) => {
                     reject(err);
-                })
+                });
             });
+
         })
+        .catch((err) => {
+            return err;
+        });
     };
 
     getBlock(height) {
