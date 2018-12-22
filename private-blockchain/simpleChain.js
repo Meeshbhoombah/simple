@@ -41,21 +41,21 @@ myBlockChain.getBlockHeight().then((height) => {
 /***********************************************
  ******** Function to Get a Block  *************
  ***********************************************/
+/*
 // Be careful this only will work if `getBlock` method in Blockchain.js file 
 // return a Promise
-/*
 myBlockChain.getBlock(0).then((block) => {
 	console.log(JSON.stringify(block));
 }).catch((err) => { console.log(err);});
-*/
+*?
 
 
 /***********************************************
  ***************** Validate Block  *************
  ***********************************************/
+/*
 // Be careful this only will work if `validateBlock` method in Blockchain.js 
 // file return a Promise
-/*
 myBlockChain.validateBlock(0).then((valid) => {
 	console.log(valid);
 })

@@ -18,6 +18,7 @@ class Blockchain {
         _this.getBlockHeight()
         .then((blockHeight) => {
             if (blockHeight == 0) {
+
                 let genBlock = new Block.Block('20/April/2017 - Meesh on brink from bailout from School.');
 
                 _this.addBlock(genBlock)
@@ -60,6 +61,7 @@ class Blockchain {
 
         return _this.getBlockHeight()
         .then(async (blockHeight) => {
+
             block.height = blockHeight;
             // Genesis block prevBlockHash is empty
             if (block.height !== 0) {
@@ -67,9 +69,7 @@ class Blockchain {
                 await _this.db.get(previousBlock)
                 .then((prevBlock) => {
                     // check's integirty
-                    console.log(prevBlock);
-                    console.log(SHA256(prevBlock).toString());
-                    block.prevBlockHash = SHA256(prevBlock).toString(); 
+                    block.prevBlockHash = SHA256(JSON.stringify(prevBlock)).toString(); 
                 })
                 .catch((err) => {
                     return err; 
@@ -88,6 +88,7 @@ class Blockchain {
                     reject(err);
                 });
             });
+
         })
         .catch((err) => {
             return err;
@@ -96,18 +97,6 @@ class Blockchain {
 
     getBlock(height) {
         let _this = this;
-
-        var blockRef = height;
-
-        return new Promise(async (resolve, reject) => {
-            await _this.db.get(blockRef)
-            .then((block) => {
-                resolve(block);
-            })
-            .catch((err) => {
-                reject(err);
-            });
-        });
     };
 
     validateBlock(height) {
@@ -122,7 +111,7 @@ class Blockchain {
     _modifyBlock(height, block) {
         let self = this;
 
-        return new Promise((resolve, reject) => {
+        return new Promise( (resolve, reject) => {
             self.db.addLevelDBData(height, JSON.stringify(block).toString())
             .then((blockModified) => {
                 resolve(blockModified);

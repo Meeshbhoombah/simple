@@ -12,11 +12,8 @@ class Wrapper {
 
     put(key, value) {
         let _this = this;
-
-        var block = JSON.stringify(value);
-
         return new Promise((resolve, reject) => {
-            _this.db.put(key, block, function(err) {
+            _this.db.put(key, value, function(err) {
                 if (err) {
                     reject(err);
                 } else {
@@ -26,16 +23,14 @@ class Wrapper {
         });
     }
 
-    get(key) {
+    get(key){
         let _this = this;
-
         return new Promise((resolve, reject) => {
             _this.db.get(key, function(err, result) {
                 if (err) {
                     reject(err); 
-                } else { 
-                    var block = JSON.parse(result);
-                    resolve(block);
+                } else {
+                    resolve(result);
                 }
             });
         });
@@ -48,15 +43,15 @@ class Wrapper {
         return new Promise((resolve, reject) => {
             // Streams all underlying entities from store (start to end)
             _this.db.createReadStream()
-            .on('data', (data) => {
-                i++;
-            })
-            .on('close', (data) => {
-                resolve(i);
-            })
-            .on('error', (err) => {
-                reject(err);
-            });
+                .on('error', (err) => {
+                    reject(err);
+                })
+                .on('data', (data) => {
+                    i++;
+                })
+                .on('close', (data) => {
+                    resolve(i);
+                })
         });
     }
 }
