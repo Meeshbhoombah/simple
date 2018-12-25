@@ -64,11 +64,11 @@ class Blockchain {
             // Genesis block prevBlockHash is empty
             if (block.height !== 0) {
                 var previousBlock = block.height - 1;
-                await _this.db.get(previousBlock)
+                console.log('Block to get', previousBlock);
+                await _this.getBlock(previousBlock)
                 .then((prevBlock) => {
                     // check's integirty
-                    console.log(prevBlock);
-                    block.prevBlockHash = SHA256(prevBlock).toString(); 
+                    block.prevBlockHash = SHA256(JSON.stringify(prevBlock)).toString(); 
                 })
                 .catch((err) => {
                     return err; 
@@ -111,6 +111,12 @@ class Blockchain {
 
     validateBlock(height) {
         let _this = this;
+
+        var blockRef = height;
+
+        return new Promise((resolve, reject) => {
+         
+        });
     };
 
     validateChain() {

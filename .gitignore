@@ -5,6 +5,9 @@
 *.swp
 *.swo
 
+# Db
+chaindata/
+
 # Logs
 logs
 *.log
