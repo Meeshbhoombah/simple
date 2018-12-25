@@ -1,10 +1,14 @@
 
-const express   = require('express');
-const Chain     = require('Blockchain');
-const Block     = require('Block');
+const express    = require('express');
+const bodyParser = require('body-parser')
+const Chain     = require('./simple/Blockchain');
+const Block     = require('./simple/Block');
 
 
 app = express();
+const PORT = 8000;
+
+
 let chain = new Chain.Blockchain();
 
 
@@ -14,11 +18,11 @@ app.get('/block/:height', function(req, res) {
 
 
 app.post('/block', function(req, res) {
-
+    console.log(req.body);
 });
 
 
-app.listen(process.env.PORT || 8000, function() {
-    console.log('Listening on port ' + app.get('port'));
+app.listen(PORT, function() {
+    console.log('Listening on port:', PORT);
 });
 
