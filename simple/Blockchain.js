@@ -18,7 +18,7 @@ class Blockchain {
         _this.getBlockHeight()
         .then((blockHeight) => {
             if (blockHeight == 0) {
-                let genBlock = new Block.Block('20/April/2017 - Meesh on brink from bailout from School.');
+                let genBlock = new Block.Block('The New Frontier');
 
                 _this.addBlock(genBlock)
                 .then((genesisBlock) => {
