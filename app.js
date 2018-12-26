@@ -76,7 +76,38 @@ app.post('/requestValidation', (req, res) => {
 
 
 /******** VALIDATE MESSAGE SIGNATURE *********/
-app.post('/message-signature/validate', (req, res) => {
+const signedMessageSchema = yup.object().shape({
+    address: yup.string().max(34).required(),
+    signature: yup.string().max(88).required()
+})
+
+app.post('/message-signature/validate', (req, res) => { 
+    var signedMessageRequest = req.body;
+   
+    signedMessageSchema
+    .validate(signedMessageRequest)
+    .catch((err) => {
+        let response = {
+            statusCode: 400,
+            error: err
+        };
+
+        return res.status(response.statusCode).send(response);
+    });
+
+
+    let address = req.body['address'];
+    let signature = req.body['signature'];
+    let requestObject = cache[address];
+
+    if (!requestObject) {
+        let response = {
+            statusCode: 400,
+            error: 'Validation request not made within window/wallet address invalid.'
+        };
+
+        return res.status(response.statusCode).send(response);
+    }
 
 });
 
