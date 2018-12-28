@@ -4,6 +4,7 @@ const bodyParser  = require('body-parser')
 const Chain       = require('./simple/Blockchain');
 const Block       = require('./simple/Block');
 const yup         = require('yup');
+const btcMsg      = require('bitcoinjs-message');
 
 
 app = express();
@@ -95,7 +96,6 @@ app.post('/message-signature/validate', (req, res) => {
         return res.status(response.statusCode).send(response);
     });
 
-
     let address = req.body['address'];
     let signature = req.body['signature'];
     let requestObject = cache[address];
@@ -109,6 +109,43 @@ app.post('/message-signature/validate', (req, res) => {
         return res.status(response.statusCode).send(response);
     }
 
+    console.log('msg', requestObject.message);
+    console.log(address);
+    console.log(signature);
+
+    try {
+        let validSignature = btcMsg.verify(requestObject.message, address, signature);
+
+        if (validSignature !== true) {
+            throw new Error('Provided credentials failed to sign message.')   
+        }
+    } catch (err) {
+        let response = {
+            statusCode: 502,
+            error: err
+        };
+
+        return res.status(response.statusCode).send(response);
+    }
+
+    let timestamp = new Date().getTime().toString().slice(0, -3);
+    let timeElapsed = timestamp - requestObject.requestTimeStamp;
+    let refreshedWindow = 300 - timeElapsed;
+
+    let response = {
+        registerStar: true,
+        status: {
+            address: address,
+            requestTimeStamp: requestObject.requestTimeStamp,
+            message: requestObject.message,
+            validationWindow: refreshedWindow,
+            messageSignature: 'valid'
+        }
+    }
+
+    return res.status(200)
+        .set("Content-Type", "application/json")
+        .send(response);
 });
 
 
