@@ -160,8 +160,71 @@ const starBodySchema = yup.object().shape({
 });
 
 
-app.post('/block', (req, res) => {
+function _toHexa(str) {
+    let resp = [];
 
+    for (let n = 0; l = str.length; n < l, n++) {
+        let hex = Number(str.charCodeAt(n).toString(16));
+        resp.push(hex);
+    }
+
+    return resp.join('');
+};
+
+function _toAscii(hexa) {
+    let resp = [];
+    let hex = hexa.toString();
+    let str = '';
+
+    for (let n = 0; n < hex.length; n += 2) {
+        str += String.fromCharCode(parseInt(hex.substr(n, 2), 16));
+    }
+
+    return str;
+};
+
+
+app.post('/block', (req, res) => {
+    var createStarRequest = req.body;
+
+    starBodySchema
+    .validate(createStarRequest)
+    .catch((err) => {
+        let response = {
+            statusCode: 400,
+            error: err
+        };
+
+        return res.status(response.statusCode).send(response);
+    });
+
+    let address = req.body['address'];
+    let requestObject = cache[address];
+
+    if (!requestObject) {
+        let response = {
+            statusCode: 400,
+            error: 'Validation request not made within window/wallet address invalid.'
+        };
+
+        return res.status(response.statusCode).send(response);
+    }
+    
+    try {
+        let validSignature = btcMsg.verify(requestObject.message, address, signature);
+
+        if (validSignature !== true) {
+            throw new Error('Provided credentials failed to sign message.')   
+        }
+    } catch (err) {
+        let response = {
+            statusCode: 502,
+            error: err
+        };
+
+        return res.status(response.statusCode).send(response);
+    }
+     
 });
 
 
