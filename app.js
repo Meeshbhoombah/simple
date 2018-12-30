@@ -159,36 +159,22 @@ const starBodySchema = yup.object().shape({
     })
 });
 
-
 function _toHexa(str) {
-    let resp = [];
+    let hexa = [];
 
     for (let n = 0; l = str.length; n < l, n++) {
         let hex = Number(str.charCodeAt(n).toString(16));
-        resp.push(hex);
+        hexa.push(hex);
     }
 
-    return resp.join('');
+    return hexa.join('');
 };
 
-function _toAscii(hexa) {
-    let resp = [];
-    let hex = hexa.toString();
-    let str = '';
-
-    for (let n = 0; n < hex.length; n += 2) {
-        str += String.fromCharCode(parseInt(hex.substr(n, 2), 16));
-    }
-
-    return str;
-};
-
-
-app.post('/block', (req, res) => {
-    var createStarRequest = req.body;
+app.post('/block', async (req, res) => {
+    var createStarBody = req.body;
 
     starBodySchema
-    .validate(createStarRequest)
+    .validate(createStarBody)
     .catch((err) => {
         let response = {
             statusCode: 400,
@@ -198,7 +184,7 @@ app.post('/block', (req, res) => {
         return res.status(response.statusCode).send(response);
     });
 
-    let address = req.body['address'];
+    let address = createStarBody['address'];
     let requestObject = cache[address];
 
     if (!requestObject) {
@@ -224,13 +210,51 @@ app.post('/block', (req, res) => {
 
         return res.status(response.statusCode).send(response);
     }
-     
+    
+    let story = createStarBody['star']['story'];
+    createStarBody['start']['story'] = story._toHexa();
+
+    chain.addBlock(new Block(createStarBody)
+    .then((registedStar) => {
+        delete cache[address];
+
+        return res.status(200)        
+            .set("Content-Type", "application/json")
+            .send(registeredStar);
+    })
+    .catch((err) => {
+        let response = {
+            statusCode: 502,
+            error: err
+        };
+
+        return res.status(response.statusCode).send(response);
+    });
 });
 
 
 /* READ one block from hash */
-app.get('/stars/:hash', (req, res) => {
+const getStarSchema = yup.object().shape({
+    
+});
 
+function _toAscii(hex) {
+    let ascii = [];
+
+    let hexa = hex.toString();
+    let str = '';
+
+    for (let n = 0; n < hexa.length; n += 2) {
+        str += String.fromCharCode(parseInt(hexa.substr(n, 2), 16));
+    }
+
+    return str;
+};
+
+app.get('/stars/:hash', (req, res) => {         
+    var registeredStarDigest = req.params.hash.toString();
+
+    
 });
 
 

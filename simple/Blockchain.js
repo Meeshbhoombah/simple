@@ -111,12 +111,6 @@ class Blockchain {
 
     validateBlock(height) {
         let _this = this;
-
-        var blockRef = height;
-
-        return new Promise((resolve, reject) => {
-         
-        });
     };
 
     validateChain() {
