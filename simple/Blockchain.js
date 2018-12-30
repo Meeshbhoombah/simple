@@ -109,6 +109,56 @@ class Blockchain {
         });
     };
 
+    getStar(hashToMatch) {
+        let _this = this;
+        let star;
+
+        return new Promise((resolve, reject) => {
+            _this.db.createReadStream()
+            .on('data', (data) => {
+                var block = JSON.parse(data.value);
+                var blockDigest = block.parse;
+        
+                if (hashToMatch == blockDigest) {
+                    star = block; 
+                }
+            })
+            .on('close', (data) => {
+                resolve(star);
+            })
+            .on('error', (err) => {
+                reject(err);
+            });
+        });
+    };
+
+    getStartFromAddress(addressToMatch) {
+        let _this = this;
+        let stars = [];
+        let starObject;
+
+        return new Promise((resolve, reject) => {
+            _this.db.createReadStream().on('data', function (data) {
+                try {
+                  starObject = JSON.parse(data.value.toString());
+                  //console.log(starObject);
+                } catch(e) {
+                    console.log("parse exception:  ", e.stack);
+                    reject(e);
+                }
+
+                if (starObject.body.address === walletAddress) {
+                  stars.push(starObject);
+                }
+            }).on('error', function (err) {
+                reject(err);
+            }).on('close', function () {
+                resolve(stars);
+            });
+        });
+
+    };
+
     validateBlock(height) {
         let _this = this;
     };

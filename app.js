@@ -214,7 +214,7 @@ app.post('/block', async (req, res) => {
     let story = createStarBody['star']['story'];
     createStarBody['start']['story'] = story._toHexa();
 
-    chain.addBlock(new Block(createStarBody)
+    chain.addBlock(new Block(createStarBody))
     .then((registedStar) => {
         delete cache[address];
 
@@ -234,10 +234,6 @@ app.post('/block', async (req, res) => {
 
 
 /* READ one block from hash */
-const getStarSchema = yup.object().shape({
-    
-});
-
 function _toAscii(hex) {
     let ascii = [];
 
@@ -251,21 +247,155 @@ function _toAscii(hex) {
     return str;
 };
 
-app.get('/stars/:hash', (req, res) => {         
+app.get('/stars/:hash', async (req, res) => {         
     var registeredStarDigest = req.params.hash.toString();
+    let star = ''
 
-    
+    try {
+        star = await chain.getStar(registeredStarDigest);
+
+        if (!star) {
+            throw new Error('No star found for given hash.')
+        }
+    } catch (err) {
+        let response = {
+            statusCode: 400,
+            error: err
+        };
+
+        return res.status(response.statusCode).send(response);
+    }
+
+    let starWithDecodedStory = [];
+    for (let starObject of star) {
+        starObject.body.star["storyDecoded"] = hexaToAscii(starObject.body.star.story);
+        starWithDecodedStory.push(starObject);
+    }
+
+    return res.status(200)
+              .set("Content-Type", "application/json")
+              .send(starWithDecodedStory[0]);
 });
 
 
 /* READ one decoded star with address */
-app.get('/stars/:address', (req, res) => {
+app.get('/stars/:address', async (req, res) => {
+
+    starBodySchema
+    .validate(createStarBody)
+    .catch((err) => {
+        let response = {
+            statusCode: 400,
+            error: err
+        };
+
+        return res.status(response.statusCode).send(response);
+    });
+
+    let address = req.params.addr.toString();
+    //console.log("Address is:  ", address);
+
+    let response = {
+        status_code: null,
+        status: null,
+        reason: null,
+    };
+
+    // Get all stars against a certain wallet address
+    let stars = await blockChain.getAllStarsOfWallet(address);
+
+    // Checking if the DB query was successfull or not
+    if (!stars) {
+
+        let reason = `Could not retrieve stars for wallet: ${address}`;
+        response.status_code = 500;
+        response.status = "Internal Server Error.";
+        response.reason = reason;
+
+        return res.status(response.status_code)
+                  .set("Content-Type", "application/json")
+                  .send(response);
+    }
+
+    // Check if the returned stars array has length. If zero, then no stars for that address
+    if (stars.length === 0) {
+
+        let reason = `Bad Request. No stars for wallet: ${address}`;
+        response.status_code = 400;
+        response.status = "Star Info Retrieval Failed.";
+        response.reason = reason;
+
+        return res.status(response.status_code)
+                  .set("Content-Type", "application/json")
+                  .send(response);
+    }
+
+    // If there are stars for the wallet address return them with decoded story
+    let starsWithDecodedStory = [];
+    for (let starObject of stars) {
+        starObject.body.star["storyDecoded"] = hexaToAscii(starObject.body.star.story);
+        starsWithDecodedStory.push(starObject);
+    }
+
+    return res.status(200)
+              .set("Content-Type", "application/json")
+              .send(starsWithDecodedStory);
+
 
 });
 
 
 /* READ one block from height */
 app.get('/block/:height', async (req, res) => {
+const blockHash = req.params.blockHash.toString();
+
+    let response = {
+        status_code: null,
+        status: null,
+        reason: null,
+    };
+
+    // Get star against blockHash
+    let star = await blockChain.getStarAgainstHash(blockHash);
+
+    // Checking if the DB query was successfull or not
+    if (!star) {
+
+        let reason = `Could not retrieve star for blockHash: ${blockHash}`;
+        response.status_code = 500;
+        response.status = "Internal Server Error.";
+        response.reason = reason;
+
+        return res.status(response.status_code)
+                  .set("Content-Type", "application/json")
+                  .send(response);
+    }
+
+    // Check if the returned star array has length. If zero, then no stars for that address
+    if (star.length === 0) {
+
+        let reason = `Bad Request. No star for blockHash: ${blockHash}`;
+        response.status_code = 400;
+        response.status = "Star Info Retrieval Failed.";
+        response.reason = reason;
+
+        return res.status(response.status_code)
+                  .set("Content-Type", "application/json")
+                  .send(response);
+    }
+
+    // If there is a star for the blockHash return it with decoded story
+    let starWithDecodedStory = [];
+    for (let starObject of star) {
+        starObject.body.star["storyDecoded"] = hexaToAscii(starObject.body.star.story);
+        starWithDecodedStory.push(starObject);
+    }
+
+    return res.status(200)
+              .set("Content-Type", "application/json")
+              .send(starWithDecodedStory[0]);
+
+
     var blockRef = parseInt(req.params['height']);
 
     await chain.getBlock(blockRef)
