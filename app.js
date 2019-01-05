@@ -196,21 +196,6 @@ app.post('/block', async (req, res) => {
         return res.status(response.statusCode).send(response);
     }
     
-    try {
-        let validSignature = btcMsg.verify(requestObject.message, address, signature);
-
-        if (validSignature !== true) {
-            throw new Error('Provided credentials failed to sign message.')   
-        }
-    } catch (err) {
-        let response = {
-            statusCode: 502,
-            error: err
-        };
-
-        return res.status(response.statusCode).send(response);
-    }
-    
     let story = createStarBody['star']['story'];
     createStarBody['start']['story'] = story._toHexa();
 
