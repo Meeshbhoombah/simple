@@ -197,7 +197,7 @@ app.post('/block', async (req, res) => {
     }
     
     let story = createStarBody['star']['story'];
-    createStarBody['start']['story'] = story._toHexa();
+    createStarBody['start']['story'] = toHexa(story);
 
     chain.addBlock(new Block(createStarBody))
     .then((registedStar) => {
