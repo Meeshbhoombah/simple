@@ -1,4 +1,4 @@
-# Blockchain Project 4
+# Simple
 
 ### Prerequisites
 - `level`
